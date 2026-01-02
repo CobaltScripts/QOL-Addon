@@ -20,6 +20,7 @@ base {
 
 repositories {
   mavenCentral()
+  maven("https://maven.meteordev.org/releases")
   maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
   maven("https://maven.quiteboring.dev/")
 }
@@ -32,7 +33,15 @@ dependencies {
   modImplementation("net.fabricmc:fabric-language-kotlin:${property("fabric_kotlin_version")}")
   modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_version")}")
 
-  modImplementation("org.cobalt:cobalt:1.0.0")
+  modImplementation(files("libs/Cobalt-1.0.0.jar"))
+  modImplementation("meteordevelopment:discord-ipc:1.1")
+  modImplementation("org.reflections:reflections:0.10.2")
+  modImplementation("org.lwjgl:lwjgl-nanovg:${lwjglVersion}")
+
+  listOf("windows", "linux", "macos", "macos-arm64").forEach {
+    modImplementation("org.lwjgl:lwjgl-nanovg:${lwjglVersion}:natives-$it")
+  }
+
   modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.1")
 }
 
