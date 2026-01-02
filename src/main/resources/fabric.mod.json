@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "addon",
+  "id": "qol",
   "version": "1.0.0",
-  "name": "Addon",
-  "description": "Needed for addon loading in development.",
+  "name": "QOL Addon",
+  "description": "Quality of Life.",
   "authors": [
     "QuiteBoring",
     "Twiston",
@@ -11,9 +11,9 @@
   ],
   "contact": {
     "homepage": "https://cobalt.quiteboring.dev/",
-    "sources": "https://github.com/CobaltScripts/Cobalt"
+    "sources": "https://github.com/CobaltScripts/QOL"
   },
-  "license": "CC0-1.0",
+  "license": "GNU",
   "icon": "assets/qol/icon.png",
   "environment": "*",
   "entrypoints": {

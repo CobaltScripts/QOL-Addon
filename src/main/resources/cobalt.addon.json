@@ -3,7 +3,7 @@
   "name": "qol Addon",
   "version": "1.0.0",
   "entrypoints": [
-    "org.cobalt.qol.qol"
+    "org.cobalt.QOL.Qol"
   ],
   "mixins": [
     "qol.mixins.json"
