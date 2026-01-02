@@ -1,18 +1,18 @@
-package com.example.command
+package org.cobalt.qol.command
 
 import org.cobalt.api.command.Command
 import org.cobalt.api.command.annotation.DefaultHandler
 import org.cobalt.api.command.annotation.SubCommand
 import org.cobalt.api.util.ChatUtils
 
-object ExampleCommand : Command(
+object qolCommand : Command(
   name = "example",
-  aliases = arrayOf("exampleaddon", "ea"),
+  aliases = arrayOf("qol", "ea"),
 ) {
 
   @DefaultHandler
   fun main() {
-    println("ExampleAddon default handler!")
+    println("qol default handler!")
   }
 
   @SubCommand
