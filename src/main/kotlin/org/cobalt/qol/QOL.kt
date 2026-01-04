@@ -5,6 +5,7 @@ import org.cobalt.api.event.EventBus
 import org.cobalt.api.module.Module
 import org.cobalt.qol.module.AutoSprint
 import org.cobalt.qol.module.DiscordRPC
+import org.cobalt.qol.module.NameProtect
 
 object QOL : Addon() {
 
@@ -22,7 +23,7 @@ object QOL : Addon() {
   }
 
   override fun getModules(): List<Module> {
-    return listOf(AutoSprint, DiscordRPC)
+    return listOf(AutoSprint, NameProtect, DiscordRPC)
   }
 
 }

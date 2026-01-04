@@ -6,10 +6,17 @@ import org.cobalt.Cobalt
 import org.cobalt.api.event.annotation.SubscribeEvent
 import org.cobalt.api.event.impl.client.TickEvent
 import org.cobalt.api.module.Module
+import org.cobalt.api.module.setting.impl.CheckboxSetting
 
 object DiscordRPC : Module(
   name = "Discord RPC"
 ) {
+
+  var enabled by CheckboxSetting(
+    name = "Enabled",
+    description = "Toggle discord RPC on or off",
+    defaultValue = false
+  )
 
   private val rpc: RichPresence = RichPresence()
   private var lastUpdate: Long = System.currentTimeMillis()
@@ -51,6 +58,25 @@ object DiscordRPC : Module(
   @Suppress("unused")
   @SubscribeEvent
   fun onTick(ignored: TickEvent.End) {
+    if (!enabled) {
+      if (DiscordIPC.isConnected()) {
+        DiscordIPC.stop()
+      }
+
+      return
+    }
+
+    if (!DiscordIPC.isConnected()) {
+      DiscordIPC.start(1406359679772266608L, null)
+
+      rpc.setStart(System.currentTimeMillis() / 1000L)
+      rpc.setLargeImage("logo", "${Cobalt.MOD_NAME} ${Cobalt.VERSION}")
+      rpc.setDetails("Minecraft ${Cobalt.MC_VERSION}")
+      rpc.setState(states.random())
+
+      DiscordIPC.setActivity(rpc)
+    }
+
     if (System.currentTimeMillis() - lastUpdate < 1_800_000)
       return
 
