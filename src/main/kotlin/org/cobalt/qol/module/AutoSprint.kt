@@ -11,7 +11,7 @@ object AutoSprint : Module(
   name = "Auto Sprint",
 ) {
 
-  var autoSprintToggle by CheckboxSetting(
+  var enabled by CheckboxSetting(
     name = "Enabled",
     description = "Toggle auto sprint on or off",
     defaultValue = false
@@ -19,11 +19,11 @@ object AutoSprint : Module(
 
   @SubscribeEvent
   fun onTick(event: TickEvent.Start) {
-    if (!autoSprintToggle) {
+    if (!enabled) {
       return
     }
 
-    mc.options.sprintKey.isPressed = autoSprintToggle
+    mc.options.sprintKey.isPressed = true
   }
 
 }
