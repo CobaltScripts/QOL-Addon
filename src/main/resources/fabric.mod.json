@@ -20,7 +20,7 @@
     "cobalt": [
       {
         "adapter": "kotlin",
-        "value": "org.cobalt.qol.qol"
+        "value": "org.cobalt.qol.QOL"
       }
     ]
   },
