@@ -1,4 +1,4 @@
-<h1 align="center">qol Addon</h1>
+<h1 align="center">QOL Addon</h1>
 
 <div align="center">
 
