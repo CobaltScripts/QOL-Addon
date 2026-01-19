@@ -3,6 +3,7 @@ package org.cobalt.qol.module
 import meteordevelopment.discordipc.DiscordIPC
 import meteordevelopment.discordipc.RichPresence
 import org.cobalt.Cobalt
+import org.cobalt.api.event.EventBus
 import org.cobalt.api.event.annotation.SubscribeEvent
 import org.cobalt.api.event.impl.client.TickEvent
 import org.cobalt.api.module.Module
@@ -48,11 +49,12 @@ object DiscordRPC : Module(
     DiscordIPC.start(1406359679772266608L, null)
 
     rpc.setStart(System.currentTimeMillis() / 1000L)
-    rpc.setLargeImage("logo", "${Cobalt.MOD_NAME} ${Cobalt.VERSION}")
-    rpc.setDetails("Minecraft ${Cobalt.MC_VERSION}")
+    rpc.setLargeImage("logo", "Cobalt 1.0.0")
+    rpc.setDetails("Minecraft 1.21.10")
     rpc.setState(states.random())
 
     DiscordIPC.setActivity(rpc)
+    EventBus.register(this)
   }
 
   @Suppress("unused")
@@ -70,8 +72,8 @@ object DiscordRPC : Module(
       DiscordIPC.start(1406359679772266608L, null)
 
       rpc.setStart(System.currentTimeMillis() / 1000L)
-      rpc.setLargeImage("logo", "${Cobalt.MOD_NAME} ${Cobalt.VERSION}")
-      rpc.setDetails("Minecraft ${Cobalt.MC_VERSION}")
+      rpc.setLargeImage("logo", "Cobalt 1.0.0")
+      rpc.setDetails("Minecraft 1.21.10")
       rpc.setState(states.random())
 
       DiscordIPC.setActivity(rpc)

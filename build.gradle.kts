@@ -27,20 +27,21 @@ repositories {
 
 dependencies {
   minecraft("com.mojang:minecraft:${property("minecraft_version")}")
-  mappings("net.fabricmc:yarn:${property("yarn_mappings")}:v2")
+  mappings(loom.officialMojangMappings())
+
   modImplementation("net.fabricmc:fabric-loader:${property("loader_version")}")
-
   modImplementation("net.fabricmc:fabric-language-kotlin:${property("fabric_kotlin_version")}")
-  modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_version")}")
+  modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_api_version")}")
 
-  modImplementation(files("libs/Cobalt-1.0.0.jar"))
+  modImplementation("org.cobalt:cobalt:1.0.0")
   modImplementation("meteordevelopment:discord-ipc:1.1")
   modImplementation("org.reflections:reflections:0.10.2")
-  modImplementation("org.lwjgl:lwjgl-nanovg:${lwjglVersion}")
 
-  listOf("windows", "linux", "macos", "macos-arm64").forEach {
-    modImplementation("org.lwjgl:lwjgl-nanovg:${lwjglVersion}:natives-$it")
-  }
+  modImplementation("org.lwjgl:lwjgl-nanovg:${lwjglVersion}")
+  modImplementation("org.lwjgl:lwjgl-nanovg:${lwjglVersion}:natives-windows")
+  modImplementation("org.lwjgl:lwjgl-nanovg:${lwjglVersion}:natives-linux")
+  modImplementation("org.lwjgl:lwjgl-nanovg:${lwjglVersion}:natives-macos")
+  modImplementation("org.lwjgl:lwjgl-nanovg:${lwjglVersion}:natives-macos-arm64")
 
   modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.1")
 }

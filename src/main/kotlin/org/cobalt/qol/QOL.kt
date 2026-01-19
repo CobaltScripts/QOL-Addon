@@ -5,17 +5,13 @@ import org.cobalt.api.event.EventBus
 import org.cobalt.api.module.Module
 import org.cobalt.qol.module.AutoSprint
 import org.cobalt.qol.module.DiscordRPC
+import org.cobalt.qol.module.Misc
 import org.cobalt.qol.module.NameProtect
 
 object QOL : Addon() {
 
   override fun onLoad() {
     println("QOL Addon loaded!")
-
-    listOf(
-      DiscordRPC,
-      AutoSprint
-    ).forEach(EventBus::register)
   }
 
   override fun onUnload() {
@@ -23,7 +19,7 @@ object QOL : Addon() {
   }
 
   override fun getModules(): List<Module> {
-    return listOf(AutoSprint, NameProtect, DiscordRPC)
+    return listOf(AutoSprint, NameProtect, DiscordRPC, Misc)
   }
 
 }

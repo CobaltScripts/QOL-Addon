@@ -1,8 +1,8 @@
 package org.cobalt.qol.module
 
-import net.minecraft.client.MinecraftClient
-import net.minecraft.text.MutableText
-import net.minecraft.text.Text
+import net.minecraft.client.Minecraft
+import net.minecraft.network.chat.MutableComponent
+import net.minecraft.network.chat.Component
 import org.cobalt.api.module.Module
 import org.cobalt.api.module.setting.impl.CheckboxSetting
 import org.cobalt.api.module.setting.impl.TextSetting
@@ -11,7 +11,8 @@ object NameProtect : Module(
   name = "Name Protect"
 ) {
 
-  private val mc = MinecraftClient.getInstance()
+  private val mc: Minecraft =
+    Minecraft.getInstance()
 
   var enabled by CheckboxSetting(
     name = "Enabled",
@@ -26,8 +27,8 @@ object NameProtect : Module(
   )
 
   @JvmStatic
-  fun getName(): MutableText {
-    return Text.literal(nick)
+  fun getName(): MutableComponent {
+    return Component.literal(nick)
   }
 
   @JvmStatic

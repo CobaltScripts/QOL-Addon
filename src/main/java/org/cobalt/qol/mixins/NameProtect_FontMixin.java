@@ -2,22 +2,22 @@ package org.cobalt.qol.mixins;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.OrderedText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.Font;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.Component;
 import org.cobalt.qol.module.NameProtect;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-@Mixin(TextRenderer.class)
-public class NameProtect_TextRendererMixin {
+@Mixin(Font.class)
+public class NameProtect_FontMixin {
 
   @Unique
-  private static OrderedText replaceWordWithText(OrderedText orderedText, String target, MutableText replacement) {
+  private static FormattedCharSequence replaceWordWithText(FormattedCharSequence orderedText, String target, MutableComponent replacement) {
     List<String> chars = new ArrayList<>();
     List<Style> styles = new ArrayList<>();
 
@@ -33,7 +33,7 @@ public class NameProtect_TextRendererMixin {
 
     if (!raw.contains(target)) return orderedText;
 
-    MutableText rebuilt = Text.empty();
+    MutableComponent rebuilt = Component.empty();
     int searchIndex = 0;
     int rawLen = raw.length();
 
@@ -41,31 +41,31 @@ public class NameProtect_TextRendererMixin {
       int found = raw.indexOf(target, searchIndex);
       if (found == -1) {
         for (int i = searchIndex; i < rawLen; i++) {
-          rebuilt.append(Text.literal(chars.get(i)).setStyle(styles.get(i)));
+          rebuilt.append(Component.literal(chars.get(i)).setStyle(styles.get(i)));
         }
 
         break;
       }
 
       for (int i = searchIndex; i < found; i++) {
-        rebuilt.append(Text.literal(chars.get(i)).setStyle(styles.get(i)));
+        rebuilt.append(Component.literal(chars.get(i)).setStyle(styles.get(i)));
       }
 
       rebuilt.append(replacement);
       searchIndex = found + target.length();
     }
 
-    return rebuilt.asOrderedText();
+    return rebuilt.getVisualOrderText();
   }
 
   @ModifyVariable(
-    method = "prepare(Lnet/minecraft/text/OrderedText;FFIZI)Lnet/minecraft/client/font/TextRenderer$GlyphDrawable;",
+    method = "prepareText(Lnet/minecraft/util/FormattedCharSequence;FFIZI)Lnet/minecraft/client/gui/Font$PreparedText;",
     at = @At("HEAD"),
     argsOnly = true
   )
-  private OrderedText modifyMinecraftName(OrderedText text) {
+  private FormattedCharSequence modifyMinecraftName(FormattedCharSequence text) {
     if (NameProtect.INSTANCE.getEnabled()) {
-      MutableText replacement = NameProtect.getName();
+      MutableComponent replacement = NameProtect.getName();
       return replaceWordWithText(text, NameProtect.getMcIGN(), replacement);
     }
 
