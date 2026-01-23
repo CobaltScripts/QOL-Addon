@@ -17,42 +17,43 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 public class NameProtect_FontMixin {
 
   @Unique
-  private static FormattedCharSequence replaceWordWithText(FormattedCharSequence orderedText, String target, MutableComponent replacement) {
-    List<String> chars = new ArrayList<>();
+  private static FormattedCharSequence cobalt$replaceWordWithText(
+    FormattedCharSequence text,
+    String target,
+    MutableComponent replacement
+  ) {
+    MutableComponent rebuilt = Component.empty();
+    StringBuilder rawBuilder = new StringBuilder();
+
     List<Style> styles = new ArrayList<>();
 
-    orderedText.accept((index, style, codePoint) -> {
-      chars.add(new String(Character.toChars(codePoint)));
+    text.accept((index, style, codePoint) -> {
+      rawBuilder.appendCodePoint(codePoint);
       styles.add(style);
       return true;
     });
 
-    StringBuilder rawBuilder = new StringBuilder(chars.size());
-    for (String c : chars) rawBuilder.append(c);
     String raw = rawBuilder.toString();
+    int targetLen = target.length();
+    int i = 0;
 
-    if (!raw.contains(target)) return orderedText;
+    while (i < raw.length()) {
+      int found = raw.indexOf(target, i);
 
-    MutableComponent rebuilt = Component.empty();
-    int searchIndex = 0;
-    int rawLen = raw.length();
-
-    while (searchIndex < rawLen) {
-      int found = raw.indexOf(target, searchIndex);
       if (found == -1) {
-        for (int i = searchIndex; i < rawLen; i++) {
-          rebuilt.append(Component.literal(chars.get(i)).setStyle(styles.get(i)));
+        for (int j = i; j < raw.length(); j++) {
+          rebuilt.append(Component.literal(new String(Character.toChars(raw.codePointAt(j)))).setStyle(styles.get(j)));
         }
 
         break;
       }
 
-      for (int i = searchIndex; i < found; i++) {
-        rebuilt.append(Component.literal(chars.get(i)).setStyle(styles.get(i)));
+      for (int j = i; j < found; j++) {
+        rebuilt.append(Component.literal(new String(Character.toChars(raw.codePointAt(j)))).setStyle(styles.get(j)));
       }
 
-      rebuilt.append(replacement);
-      searchIndex = found + target.length();
+      rebuilt.append(replacement.copy().setStyle(styles.get(found)));
+      i = found + targetLen;
     }
 
     return rebuilt.getVisualOrderText();
@@ -65,8 +66,7 @@ public class NameProtect_FontMixin {
   )
   private FormattedCharSequence modifyMinecraftName(FormattedCharSequence text) {
     if (NameProtect.INSTANCE.getEnabled()) {
-      MutableComponent replacement = NameProtect.getName();
-      return replaceWordWithText(text, NameProtect.getMcIGN(), replacement);
+      return cobalt$replaceWordWithText(text, NameProtect.getMcIGN(), NameProtect.getName());
     }
 
     return text;
