@@ -46,8 +46,8 @@ jobs:
             exit 0
           fi
 
-          ADDON_NAME=$(grep -Po '^addonName=.*' gradle.properties | cut -d= -f2 | xargs)
           ADDON_VERSION=$(grep -Po '^addonVersion=.*' gradle.properties | cut -d= -f2 | xargs)
+          ADDON_NAME=$(grep -Po '^addonName=.*' gradle.properties | cut -d= -f2 | xargs)
 
           echo "SHOULD_RELEASE=$SHOULD_RELEASE" >> $GITHUB_OUTPUT
           echo "ADDON_VERSION=$ADDON_VERSION" >> $GITHUB_OUTPUT
