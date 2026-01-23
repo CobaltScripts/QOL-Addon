@@ -1,9 +1,9 @@
 {
-  "id": "qol_addon",
-  "name": "QOL Addon",
+  "id": "qol",
+  "name": "QOL",
   "version": "1.0.0",
   "entrypoints": [
-    "org.cobalt.qol.Qol"
+    "org.cobalt.qol.QOL"
   ],
   "mixins": [
     "qol.mixins.json"

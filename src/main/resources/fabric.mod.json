@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "id": "qol",
   "version": "1.0.0",
-  "name": "QOL Addon",
-  "description": "Quality of Life.",
+  "name": "QOL",
+  "description": "Quality of Life improvements for Hypixel Skyblock.",
   "authors": [
     "QuiteBoring",
     "Twiston",
