@@ -60,11 +60,11 @@ public class NameProtect_FontMixin {
   }
 
   @ModifyVariable(
-    method = "prepareText(Lnet/minecraft/util/FormattedCharSequence;FFIZI)Lnet/minecraft/client/gui/Font$PreparedText;",
+    method = "prepareText(Lnet/minecraft/util/FormattedCharSequence;FFIZZI)Lnet/minecraft/client/gui/Font$PreparedText;",
     at = @At("HEAD"),
     argsOnly = true
   )
-  private FormattedCharSequence modifyMinecraftName(FormattedCharSequence text) {
+  private FormattedCharSequence modifyCharSequence(FormattedCharSequence text) {
     if (NameProtect.INSTANCE.getEnabled()) {
       return cobalt$replaceWordWithText(text, NameProtect.getMcIGN(), NameProtect.getName());
     }

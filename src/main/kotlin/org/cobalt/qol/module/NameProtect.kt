@@ -20,6 +20,7 @@ object NameProtect : Module(
     defaultValue = false
   )
 
+  @JvmStatic
   var nick by TextSetting(
     name = "Nickname",
     description = "Your new nickname",

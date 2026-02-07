@@ -43,6 +43,7 @@ dependencies {
   }
 
   modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.1")
+  runtimeOnly("org.apache.httpcomponents:httpclient:4.5.14")
 }
 
 tasks {
